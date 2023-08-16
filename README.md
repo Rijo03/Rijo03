@@ -1,5 +1,6 @@
 <h1 align="center">Hi 👋, I'm Rijo</h1>
 <h3 align="center">A passionate Software Tester from India</h3>
+<img align="right" alt="Testing" width="400" src="https://miro.medium.com/v2/resize:fit:720/0*7Q3yvSIv_t0ioJ-Z.gif">
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=rijo03&label=Profile%20views&color=0e75b6&style=flat" alt="rijo03" /> </p>
 
