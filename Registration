@@ -1,0 +1,110 @@
+package dataDriven;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class Registration {
+
+	public static void main(String[] args) throws IOException {
+		
+		System.setProperty("webdriver.firefox.marionette", "D:\\Java Training\\Firefox driver\\geckodriver.exe");
+		
+		WebDriver driver = new FirefoxDriver();
+		
+		driver.get("https://demo.guru99.com/test/newtours/");
+		
+		
+		FileInputStream file=new FileInputStream("D://Java Training//Excel//Registration.xlsx");
+		
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+			XSSFSheet sheet= workbook.getSheet("Sheet1");
+			
+			int rowcount = sheet.getLastRowNum();
+			
+			System.out.println("The row count of sheet: " +rowcount);
+			/*
+			int row=1;
+			
+			XSSFRow current_row=sheet.getRow(row);
+			
+			int Phone=(int) current_row.getCell(2).getNumericCellValue();
+			System.out.println(Phone);
+			*/
+		
+		
+		for (int row=1 ;row<=rowcount; row++)
+		{
+			XSSFRow current_row=sheet.getRow(row);
+			
+			String FirstName=current_row.getCell(0).getStringCellValue();
+			String LastName=current_row.getCell(1).getStringCellValue();
+			int Phone=(int) current_row.getCell(2).getNumericCellValue();
+			String Email=current_row.getCell(3).getStringCellValue();
+			String Address=current_row.getCell(4).getStringCellValue();
+			String City=current_row.getCell(5).getStringCellValue();
+			String State=current_row.getCell(6).getStringCellValue();
+			int PostalCode=(int) current_row.getCell(7).getNumericCellValue();
+			String Country=current_row.getCell(8).getStringCellValue();
+			String UserName=current_row.getCell(9).getStringCellValue();
+			String Password=current_row.getCell(10).getStringCellValue();
+			
+			//To click on the register link
+			
+			driver.findElement(By.linkText("REGISTER")).click();
+			
+			//Entering information in the page
+			
+			driver.findElement(By.name("firstName")).sendKeys(FirstName);
+			driver.findElement(By.name("lastName")).sendKeys(LastName);
+			driver.findElement(By.name("phone")).sendKeys(String.valueOf(Phone));
+			driver.findElement(By.name("userName")).sendKeys(Email);
+			driver.findElement(By.name("address1")).sendKeys(Address);
+			driver.findElement(By.name("city")).sendKeys(City);
+			driver.findElement(By.name("state")).sendKeys(State);
+			driver.findElement(By.name("postalCode")).sendKeys(String.valueOf(PostalCode));
+			
+			//Country selection from drop down
+			Select dropcountry= new Select(driver.findElement(By.name("country")));
+			dropcountry.selectByVisibleText(Country);
+			
+			driver.findElement(By.name("email")).sendKeys(UserName);
+			driver.findElement(By.name("password")).sendKeys(Password);
+			driver.findElement(By.name("confirmPassword")).sendKeys(Password);
+			
+			//Submitting form
+			
+			driver.findElement(By.name("submit")).click();
+			
+			if (driver.getPageSource().contains("Thank you for registering"))
+			{
+				System.out.println("Registration completed " +row+ " Record");
+			}
+				else
+				{
+					System.out.println("Registration failed" +row+ "Record");
+				}
+				
+				
+			}
+			
+			System.out.println("Data driven Test Completed");
+			
+			driver.close();
+		
+			
+		
+		}
+		
+		
+
+	}
+
+
